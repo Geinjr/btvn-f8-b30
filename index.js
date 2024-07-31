@@ -68,6 +68,7 @@ var deltaX = 0;
 
 carouselInner.addEventListener("mousedown", function (e) {
     if (e.which === 1) {
+        e.preventDefault();
         isDragging = true;
         startX = e.clientX;
         initialPosition = position;
@@ -80,9 +81,10 @@ carouselInner.addEventListener("mousedown", function (e) {
 function handleDrag(e) {
     if (isDragging) {
         deltaX = e.clientX - startX;
-        carouselInner.style.left = `${initialPosition + deltaX}px`;
+        carouselInner.style.translate = `${initialPosition + deltaX}px`; // Thay `translate` bằng `translate`
     }
 }
+var totalWidth = carouselWidth * carouselInner.children.length;
 
 function handleEnd(e) {
     if (isDragging) {
@@ -108,10 +110,10 @@ function handleEnd(e) {
                 }
             }
 
-            carouselInner.style.left = `${position}px`;
+            carouselInner.style.translate = `${position}px`;
             updateDots();
         } else {
-            carouselInner.style.left = `${position}px`;
+            return;
         }
     }
 }
